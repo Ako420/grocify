@@ -2,15 +2,23 @@ import { useAuth } from "@clerk/expo";
 import { Redirect } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
+import { useGroceryStore } from "../store/grocery-store";
 
 export default function TabsoutesLayout() {
   const { isSignedIn, isLoaded } = useAuth();
+
+  const { loadItems, items } = useGroceryStore();
 
   const { colorScheme } = useColorScheme();
 
   const IsDark = colorScheme === "dark";
   const tabTintColor = IsDark ? "hsl(142, 70% 54%)" : "hsl(147 75% 33%)";
   // const tabbackgroundColor = IsDark ? "white/70" : "white/80"
+
+  useEffect(() => {
+    loadItems();
+  }, []);
 
   if (!isLoaded) {
     return null;
@@ -21,7 +29,7 @@ export default function TabsoutesLayout() {
   }
 
   return (
-    <NativeTabs  tintColor={tabTintColor}>
+    <NativeTabs tintColor={tabTintColor}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Icon
           sf={{
