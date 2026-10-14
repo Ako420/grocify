@@ -3,7 +3,7 @@ import { Redirect } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
-import { useGroceryStore } from "../store/grocery-store";
+import { useGroceryStore } from "../../store/grocery-store";
 
 export default function TabsoutesLayout() {
   const { isSignedIn, isLoaded } = useAuth();
