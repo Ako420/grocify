@@ -1,8 +1,8 @@
-import { useGroceryStore } from "@/store/grocery-store";
 import CompletedItems from "@/components/list/CompletedItems";
 import ListHeroCard from "@/components/list/ListHeroCard";
 import PendingItemCard from "@/components/list/PendingItemCard";
 import TabScreenBackground from "@/components/TabScreenBackeground";
+import { useGroceryStore } from "@/store/grocery-store";
 import { FlatList, Text, View } from "react-native";
 
 const LIstScreen = () => {
@@ -16,7 +16,7 @@ const LIstScreen = () => {
       data={pendingItems}
       keyExtractor={(items) => items.id}
       renderItem={({ item }) => <PendingItemCard item={item} />}
-      contentContainerStyle={{ padding: 20, gap: 14 }}
+      contentContainerStyle={{ padding: 10, gap: 14 }}
       contentInsetAdjustmentBehavior="automatic"
       ListHeaderComponent={
         <View style={{ gap: 14 }}>

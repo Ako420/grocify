@@ -19,7 +19,7 @@ const planner = () => {
 
   return (
     <KeyboardAwareScrollView
-    bottomOffset={80}
+      bottomOffset={80}
       className="flex-1 bg-background p-4 "
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
