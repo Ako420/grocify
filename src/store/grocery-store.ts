@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type GroceryCategory =
-  "Produce" | "Dairy" | "Bakery" | "Pantry" | "Stacks";
+  "Produce" | "Dairy" | "Bakery" | "Pantry" | "Snacks";
 export type GroceryPriority = "low" | "medium" | "high";
 
 export type GroceryItem = {
@@ -35,12 +35,12 @@ type GroceryStore = {
   clearPurchased: () => Promise<void>;
 };
 
-export const useGroceryStore = create<GroceryStore>((set,get) => (({
-    items: [],
-    isLoading: false,
-    error:null,
-    
-    loadItems: async () => {
+export const useGroceryStore = create<GroceryStore>((set, get) => ({
+  items: [],
+  isLoading: false,
+  error: null,
+
+  loadItems: async () => {
     set({ isLoading: true, error: null });
     try {
       const res = await fetch("/api/items");
@@ -79,7 +79,6 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
       set({ error: "Something went wrong" });
     }
   },
-
   updateQuantity: async (id, quantity) => {
     const nextQuantity = Math.max(1, quantity);
     set({ error: null });
@@ -93,7 +92,9 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
       const payload = (await res.json()) as ItemResponse;
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       set((state) => ({
-        items: state.items.map((item) => (item.id === id ? payload.item : item)),
+        items: state.items.map((item) =>
+          item.id === id ? payload.item : item,
+        ),
       }));
     } catch (error) {
       console.error("Error updating quantity:", error);
@@ -101,7 +102,7 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
     }
   },
 
-   togglePurchased: async (id) => {
+  togglePurchased: async (id) => {
     const currentItem = get().items.find((item) => item.id === id);
     if (!currentItem) return;
 
@@ -118,7 +119,9 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
 
       set((state) => ({
-        items: state.items.map((item) => (item.id === id ? payload.item : item)),
+        items: state.items.map((item) =>
+          item.id === id ? payload.item : item,
+        ),
       }));
     } catch (error) {
       console.error("Error toggling purchased:", error);
@@ -126,7 +129,7 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
     }
   },
 
-    removeItem: async (id) => {
+  removeItem: async (id) => {
     set({ error: null });
     try {
       const res = await fetch(`/api/items/${id}`, { method: "DELETE" });
@@ -152,4 +155,4 @@ export const useGroceryStore = create<GroceryStore>((set,get) => (({
       set({ error: "Something went wrong" });
     }
   },
-})));
+}));

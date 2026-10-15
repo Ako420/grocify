@@ -8,7 +8,7 @@ import { useGroceryStore } from "../../store/grocery-store";
 export default function TabsoutesLayout() {
   const { isSignedIn, isLoaded } = useAuth();
 
-  const { loadItems, items } = useGroceryStore();
+  const { loadItems } = useGroceryStore();
 
   const { colorScheme } = useColorScheme();
 

@@ -1,8 +1,8 @@
-import { createGroceryItem, listGrocery } from "@/lib/server/db-actions";
+import { createGroceryItem, listGroceryItems } from "@/lib/server/db-actions";
 
 export async function GET() {
   try {
-    const items = await listGrocery();
+    const items = await listGroceryItems();
     return Response.json({ items });
   } catch (error) {
     const message =

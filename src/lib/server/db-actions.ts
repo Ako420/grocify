@@ -2,13 +2,13 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "./db/client";
 import { groceryItems } from "./db/schema";
 
-export const listGrocery = async () => {
-    const row = await db.select().from(groceryItems).orderBy(desc(groceryItems.updatedAt))
+export const listGroceryItems = async () => {
+  const rows = await db.select().from(groceryItems).orderBy(desc(groceryItems.updated_at));
 
-    return row;
-}
+  return rows;
+};
 
-export const createGroceryItem = async (input:{
+export const createGroceryItem = async (input: {
   name: string;
   category: string;
   quantity: number;
@@ -22,7 +22,7 @@ export const createGroceryItem = async (input:{
       quantity: Math.max(1, input.quantity),
       purchased: false,
       priority: input.priority,
-      updatedAt: Date.now(),
+      updated_at: Date.now(),
     })
     .returning();
 
@@ -32,7 +32,7 @@ export const createGroceryItem = async (input:{
 export const setGroceryItemPurchased = async (id: string, purchased: boolean) => {
   const rows = await db
     .update(groceryItems)
-    .set({ purchased, updatedAt: Date.now() })
+    .set({ purchased, updated_at: Date.now() })
     .where(eq(groceryItems.id, id))
     .returning();
 
@@ -43,7 +43,7 @@ export const setGroceryItemPurchased = async (id: string, purchased: boolean) =>
 export const updateGroceryItemQuantity = async (id: string, quantity: number) => {
   const rows = await db
     .update(groceryItems)
-    .set({ quantity: Math.max(1, Math.floor(quantity)), updatedAt: Date.now() })
+    .set({ quantity: Math.max(1, Math.floor(quantity)), updated_at: Date.now() })
     .where(eq(groceryItems.id, id))
     .returning();
 
